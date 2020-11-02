@@ -1,0 +1,74 @@
+<div class="bg-danger">
+<button (click)="showUserForm = !showUserForm" class="btn btn-dark mb-3">Register User</button>
+
+		      <div *ngIf="showUserForm">
+				<h2>Register User Form</h2>
+			
+				<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+                <div class= "form-group">
+					<label>First Name</label>
+					<input [(ngModel)]="user.firstName" #userFirstName="ngModel"
+						type="text"
+						class="form-control"
+						name="firstName"
+						minlength="2"
+						required
+						[ngClass]="{'is-invalid': userFirstName.errors && userFirstName.touched}"
+						>
+					
+					<div [hidden]="!userFirstName.errors?.required" class="invalid-feedback">First name required!</div>
+					<div [hidden]="!userFirstName.errors?.minlength" class="invalid-feedback">First name must be at least 2 Characters</div>
+                
+                    <label>Last Name</label>
+					<input [(ngModel)]="user.lastName" #userLastName="ngModel"
+						type="text"
+						class="form-control"
+						name="lastName"
+						minlength="2"
+						required
+						[ngClass]="{'is-invalid': userLastName.errors && userLastName.touched}"
+						>
+					
+					<div [hidden]="!userLastName.errors?.required" class="invalid-feedback">Last name required!</div>
+					<div [hidden]="!userLastName.errors?.minlength" class="invalid-feedback">Last name must be at least 2 Characters</div>
+                
+
+					<label>Email</label>
+					<input [(ngModel)]="user.email" #userEmail="ngModel"
+						type="text"
+						class="form-control"
+						name="email"
+						required
+						pattern="^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]{2,4}$"
+					>
+					<div [hidden]="!userEmail.errors?.required">Email is required</div>
+					<div [hidden]="!userEmail.errors?.pattern">Please enter a valid email address</div>
+                    
+                    <label>Birth Day</label>
+                    <input [(ngModel)]="user.date" type="text" class="form-control" name="date">
+					
+                </div>								
+                 <button [disabled]="!userForm.form.valid" class="btn btn-dark mb-4">Register User</button>
+				</form>
+            </div>
+            
+           <ul class="list-unstyled" *ngIf="loaded && users?.length > 0"> <!--we can add the "?" like this: users?.length > 0 to disregard the users.length > 0 condition-->
+    <li class="card card-body mb-2" *ngFor="let user of users" [class.bg-light]="user.isActive" >
+       
+            <div class="row">   
+                <div class="col-sm-8">     
+							
+							<h3> {{user.firstName}} {{user.lastName}} <small><button (click)="user.hide = !user.hide" class="btn btn-dark btn-sm"><i [ngClass]="user.hide ? 'fa fa-plus' : 'fa fa-minus'"></i></button></small></h3>
+							  <ul class="list-group" *ngIf="!user.hide">
+								<li class="list-group-item">Email: {{user.email}}</li>
+								<li class="list-group-item">Birthday: {{ user.birthDay | date }}"</li>
+							  </ul>
+                        </div>
+                    </div>
+				</li>
+			</ul>
+
+			<h4 *ngIf="users?.length == 0"> No Users found!</h4>
+			<h4 *ngIf="!loaded">Loading Users...</h4>
+
+</div> <!--Main Pack Background Divider--> 
