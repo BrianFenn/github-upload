@@ -2,7 +2,7 @@
 <button (click)="showUserForm = !showUserForm" class="btn btn-dark mb-3">Register User</button>
 
 		      <div *ngIf="showUserForm">
-				<h2>Register User Form</h2>
+				<h2>Register New User Form</h2>
 			
 				<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
                 <div class= "form-group">
